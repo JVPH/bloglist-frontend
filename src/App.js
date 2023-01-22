@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newBlogTitle, setNewBlogTitle] = useState('')
+  const [newBlogAuthor, setNewBlogAuthor] = useState('')
+  const [newBlogUrl, setNewBlogUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -30,6 +34,21 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const addBlog = async event => {
+    event.preventDefault()
+    const blogObject = {
+      title: newBlogTitle,
+      author: newBlogAuthor,
+      url: newBlogUrl,
+    }
+
+    const returnedBlog =  await blogService.create(blogObject)
+    setBlogs(blogs.concat(returnedBlog))
+    setNewBlogAuthor('')
+    setNewBlogTitle('')
+    setNewBlogUrl('')
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()    
@@ -57,21 +76,33 @@ const App = () => {
     blogService.setToken(null)
     setUser(null)
   }
+
+  const loginFormProps = {
+    handleLogin,
+    username,
+    password, 
+    setUsername,
+    setPassword
+  }
+
+  const blogFormProps = {
+    addBlog, 
+    newBlogTitle, 
+    newBlogAuthor, 
+    newBlogUrl, 
+    setNewBlogTitle, 
+    setNewBlogAuthor, 
+    setNewBlogUrl
+  }
   
   return (
     <div>
       <h2>blogs</h2>
       {user === null ? 
-        <LoginForm
-          handleLogin={handleLogin}
-          username={username} 
-          password={password} 
-          setUsername={setUsername} 
-          setPassword={setPassword}           
-        /> :
+        <LoginForm {...loginFormProps} /> :
         <div>
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button> </p>
-          {/* {noteForm()} */}
+          <BlogForm {...blogFormProps} />
         </div>
       }
       {blogs.map(blog =>
