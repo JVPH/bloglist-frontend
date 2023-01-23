@@ -114,7 +114,7 @@ const App = () => {
   
   return (
     <div>
-      <h1 className="text-5xl font-bold">Blogs</h1>
+      <h1 className="text-5xl font-bold my-6">Blogs</h1>
       <Notification notification={notification} />
       {user === null ? 
         <LoginForm {...loginFormProps} /> :
