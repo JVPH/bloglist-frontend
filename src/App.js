@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
+import Footer from './components/Footer'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -113,7 +114,7 @@ const App = () => {
   
   return (
     <div>
-      <h2>blogs</h2>
+      <h1 className="text-5xl font-bold">Blogs</h1>
       <Notification notification={notification} />
       {user === null ? 
         <LoginForm {...loginFormProps} /> :
@@ -125,6 +126,7 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <Footer />
     </div>
   )
 }
