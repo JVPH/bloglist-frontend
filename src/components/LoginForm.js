@@ -13,7 +13,7 @@ const LoginForm = ({ handleLogin, username, password, setUsername,setPassword })
     <div>
       <span className="prose-lg">password </span>        
         <input 
-          type="text"         
+          type="password"
           className="input input-bordered w-full max-w-xs"
           value={password}
           name="Password"

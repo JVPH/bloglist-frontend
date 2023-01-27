@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -60,10 +61,12 @@ const App = () => {
       setNewBlogAuthor('')
       setNewBlogTitle('')
       setNewBlogUrl('')
+      blogFormRef.current.toggleVisibility()
     } catch (error) {
       console.log(error)
       notify('Please fill all fields before submitting', 'alert')
     }
+    
   }
 
   const handleLogin = async (event) => {
@@ -111,16 +114,20 @@ const App = () => {
     setNewBlogAuthor, 
     setNewBlogUrl
   }
+
+  const blogFormRef = useRef()
   
   return (
     <div>
-      <h1 className="text-5xl font-bold my-6">Blogs</h1>
+      <h1 className='text-5xl font-bold my-6'>Blogs</h1>
       <Notification notification={notification} />
       {user === null ? 
         <LoginForm {...loginFormProps} /> :
         <div>
-          <p>{user.name} logged in <button onClick={handleLogout}>logout</button> </p>
-          <BlogForm {...blogFormProps} />
+          <p className='prose-lg'>{user.name} logged in <button className='btn rounded-none px-16' onClick={handleLogout}>logout</button> </p>
+          <Toggleable buttonLabel='new blog' ref={blogFormRef}>
+            <BlogForm {...blogFormProps} />
+          </Toggleable>
         </div>
       }
       {blogs.map(blog =>

@@ -2,7 +2,8 @@ const BlogForm = ({ addBlog, newBlogTitle, newBlogAuthor, newBlogUrl, setNewBlog
   <form onSubmit={addBlog}>
     <div>
       title:
-        <input
+        <input 
+        className="input input-bordered w-full max-w-xs"
         type="text"
         value={newBlogTitle}        
         onChange={({ target }) => setNewBlogTitle(target.value)}
@@ -11,6 +12,7 @@ const BlogForm = ({ addBlog, newBlogTitle, newBlogAuthor, newBlogUrl, setNewBlog
     <div>
         author:
         <input
+          className="input input-bordered w-full max-w-xs"
           type="text"
           value={newBlogAuthor}          
           onChange={({ target }) => setNewBlogAuthor(target.value)}
@@ -19,6 +21,7 @@ const BlogForm = ({ addBlog, newBlogTitle, newBlogAuthor, newBlogUrl, setNewBlog
     <div>
       url:
         <input
+        className="input input-bordered w-full max-w-xs"
         type="text"
         value={newBlogUrl}        
         onChange={({ target }) => setNewBlogUrl(target.value)}
