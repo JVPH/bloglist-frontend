@@ -9,12 +9,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [newBlogTitle, setNewBlogTitle] = useState('')
-  const [newBlogAuthor, setNewBlogAuthor] = useState('')
-  const [newBlogUrl, setNewBlogUrl] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [blogs, setBlogs] = useState([])    
   const [notification, setNotification] = useState(null)  
   const [user, setUser] = useState(null)
 
@@ -46,21 +41,11 @@ const App = () => {
     }, 3000)
   }
 
-  const addBlog = async event => {
-    event.preventDefault()
-    const blogObject = {
-      title: newBlogTitle,
-      author: newBlogAuthor,
-      url: newBlogUrl,
-    }
-
+  const addBlog = async blogObject => {    
     try {
       const returnedBlog =  await blogService.create(blogObject)
       setBlogs(blogs.concat(returnedBlog))      
-      notify(`A new blog ${newBlogTitle} by ${newBlogAuthor} has been added`)      
-      setNewBlogAuthor('')
-      setNewBlogTitle('')
-      setNewBlogUrl('')
+      notify(`A new blog ${blogObject.title} by ${blogObject.author} has been added`)
       blogFormRef.current.toggleVisibility()
     } catch (error) {
       console.log(error)
@@ -69,8 +54,7 @@ const App = () => {
     
   }
 
-  const handleLogin = async (event) => {
-    event.preventDefault()    
+  const handleLogin = async (username, password) => {     
     try {
       const user = await loginService.login({
         username, password
@@ -80,11 +64,8 @@ const App = () => {
         'loggedBlogListUser', JSON.stringify(user)
       )
 
-      blogService.setToken(user.token)
-      
-      setUser(user)
-      setUsername('')
-      setPassword('')
+      blogService.setToken(user.token)      
+      setUser(user)      
     } catch (error) {      
       console.log(error)
       notify('Wrong credentials', 'alert')      
@@ -95,26 +76,8 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogListUser')
     blogService.setToken(null)
     setUser(null)
-  }
-
-  const loginFormProps = {
-    handleLogin,
-    username,
-    password, 
-    setUsername,
-    setPassword
-  }
-
-  const blogFormProps = {
-    addBlog, 
-    newBlogTitle, 
-    newBlogAuthor, 
-    newBlogUrl, 
-    setNewBlogTitle, 
-    setNewBlogAuthor, 
-    setNewBlogUrl
-  }
-
+  }  
+  
   const blogFormRef = useRef()
   
   return (
@@ -122,11 +85,11 @@ const App = () => {
       <h1 className='text-5xl font-bold my-6'>Blogs</h1>
       <Notification notification={notification} />
       {user === null ? 
-        <LoginForm {...loginFormProps} /> :
+        <LoginForm handleLogin={handleLogin} /> :
         <div>
-          <p className='prose-lg'>{user.name} logged in <button className='btn rounded-none px-16' onClick={handleLogout}>logout</button> </p>
+          <p className='prose-lg'>{user.name} logged in <button className='btn' onClick={handleLogout}>logout</button> </p>
           <Toggleable buttonLabel='new blog' ref={blogFormRef}>
-            <BlogForm {...blogFormProps} />
+            <BlogForm createBlog={addBlog} />
           </Toggleable>
         </div>
       }
