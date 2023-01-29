@@ -13,15 +13,22 @@ const Blog = ({blog, handleLikesUpdate}) => {
   }  
 
   const handleLikeBtn = async () => {
+    const blogObj = {
+      ...blog,
+      likes: blog.likes+1      
+    }
+    
     const updatedBlog = {
       ...blog,
       user: blog.user.id,      
       likes: blog.likes+1
     }
 
+    
+
     await blogService.updateBlog(blog.id, updatedBlog)
     setLikes(blog.likes+1)
-    handleLikesUpdate(updatedBlog)
+    handleLikesUpdate(blogObj)
   }
 
   return (
@@ -46,6 +53,7 @@ const Blog = ({blog, handleLikesUpdate}) => {
         </div>
         <div className="stat">
           <div className="stat-title">Name:</div>
+          {console.log(blog.user)}
           <p className="prose-xl">{blog.user.name}</p>
         </div>        
       </div>
