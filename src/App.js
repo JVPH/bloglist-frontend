@@ -12,7 +12,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])    
   const [notification, setNotification] = useState(null)  
   const [user, setUser] = useState(null)
-
+  
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -79,6 +79,12 @@ const App = () => {
   }  
   
   const blogFormRef = useRef()
+
+  const handleLikesUpdate = (updatedBlog) => {
+    setBlogs(blogs.map(blog => 
+      blog.id === updatedBlog.id ? updatedBlog : blog
+    ))
+  }
   
   return (
     <div>
@@ -93,9 +99,9 @@ const App = () => {
           </Toggleable>
         </div>
       }
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      {blogs.sort((a,b) => b.likes - a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} handleLikesUpdate={handleLikesUpdate} />
+      )}      
       <Footer />
     </div>
   )
