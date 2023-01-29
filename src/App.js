@@ -11,7 +11,7 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])    
   const [notification, setNotification] = useState(null)  
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null)  
   
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -29,7 +29,7 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogListUser')
     if(loggedUserJSON){
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      setUser(user)      
       blogService.setToken(user.token)
     }
   }, [])
@@ -53,7 +53,7 @@ const App = () => {
     }
     
   }
-
+  
   const handleLogin = async (username, password) => {     
     try {
       const user = await loginService.login({
@@ -62,10 +62,10 @@ const App = () => {
 
       window.localStorage.setItem(
         'loggedBlogListUser', JSON.stringify(user)
-      )
-
-      blogService.setToken(user.token)      
+      )      
+      blogService.setToken(user.token)
       setUser(user)      
+      
     } catch (error) {      
       console.log(error)
       notify('Wrong credentials', 'alert')      
@@ -84,24 +84,32 @@ const App = () => {
     setBlogs(blogs.map(blog => 
       blog.id === updatedBlog.id ? updatedBlog : blog
     ))
+  }  
+  
+  const handleBlogRemoval = async (id) => {
+    await blogService.deleteBlog(id)
+    setBlogs(blogs.filter(blog => blog.id !== id))
   }
   
   return (
-    <div>
+    <div className='flex flex-col space-y-4 min-h-screen'>
       <h1 className='text-5xl font-bold my-6'>Blogs</h1>
       <Notification notification={notification} />
-      {user === null ? 
-        <LoginForm handleLogin={handleLogin} /> :
-        <div>
-          <p className='prose-lg'>{user.name} logged in <button className='btn' onClick={handleLogout}>logout</button> </p>
-          <Toggleable buttonLabel='new blog' ref={blogFormRef}>
-            <BlogForm createBlog={addBlog} />
-          </Toggleable>
-        </div>
-      }
-      {blogs.sort((a,b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} handleLikesUpdate={handleLikesUpdate} />
-      )}      
+      <main className='flex-1'>
+        {user === null ?
+          <LoginForm handleLogin={handleLogin} /> :
+          <div>
+            <p className='prose-lg'>{user.name} logged in <button className='btn' onClick={handleLogout}>logout</button> </p>
+            <Toggleable buttonLabel='new blog' ref={blogFormRef}>
+              <BlogForm createBlog={addBlog} />
+            </Toggleable>
+          </div>
+        }
+        {Boolean(blogs) === true ? blogs.sort((a,b) => b.likes - a.likes).map(blog =>
+          <Blog key={blog.id} blog={blog} handleLikesUpdate={handleLikesUpdate} username={user === null ? null : user.username} handleBlogRemoval={handleBlogRemoval}/>
+        )
+        : null}
+      </main>      
       <Footer />
     </div>
   )

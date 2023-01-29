@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import  blogService from '../services/blogs'
 
-const Blog = ({blog, handleLikesUpdate}) => {
+const Blog = ({blog, handleLikesUpdate, username, handleBlogRemoval}) => {
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
@@ -31,6 +31,12 @@ const Blog = ({blog, handleLikesUpdate}) => {
     handleLikesUpdate(blogObj)
   }
 
+  const handleDeleteBtn = () => {
+    if(window.confirm(`Remove ${blog.title} by ${blog.author} ?`)){
+      handleBlogRemoval(blog.id)
+    }
+  }
+
   return (
     <div>
       <div style={hideWhenVisible}>        
@@ -52,10 +58,14 @@ const Blog = ({blog, handleLikesUpdate}) => {
           <button className="btn btn-sm btn-outline" onClick={handleLikeBtn}>like</button>
         </div>
         <div className="stat">
-          <div className="stat-title">Name:</div>
-          {console.log(blog.user)}
+          <div className="stat-title">Name:</div>          
           <p className="prose-xl">{blog.user.name}</p>
         </div>        
+        {blog.user.username === username ? 
+        <div className="stat">
+          <button className="btn btn-sm btn-outline" onClick={handleDeleteBtn}>remove</button>
+        </div> 
+        : null}
       </div>
     </div>  
   )
