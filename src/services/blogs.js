@@ -9,7 +9,7 @@ const setToken = newToken => {
 
 const getAll = async () => {
   try {
-    const response = await axios.get(baseUrl)  
+    const response = await axios.get(baseUrl)
     return response.data
   } catch (error) {
     console.log(error)
@@ -30,7 +30,7 @@ const updateBlog = async (id, blogObj) => {
     const response = await axios.put(`${baseUrl}/${id}`, blogObj)
     return response.data
   } catch (error) {
-    console.log(error)    
+    console.log(error)
   }
 }
 
@@ -45,5 +45,4 @@ const deleteBlog = async (id) => {
   }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { getAll, setToken, create, updateBlog, deleteBlog }

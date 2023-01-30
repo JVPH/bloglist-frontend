@@ -3,7 +3,7 @@ const Footer = () => (
     <div>
       <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
     </div>
-  </footer>  
+  </footer>
 )
 
 export default Footer

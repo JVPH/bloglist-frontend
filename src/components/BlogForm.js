@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-const BlogForm = ({ createBlog }) => {  
+const BlogForm = ({ createBlog }) => {
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogUrl, setNewBlogUrl] = useState('')
-  
+
   const addBlog = e => {
     e.preventDefault()
     createBlog({
@@ -21,30 +21,30 @@ const BlogForm = ({ createBlog }) => {
     <form onSubmit={addBlog}>
       <div>
         title:
-          <input 
+        <input
           className="input input-bordered w-full max-w-xs"
           type="text"
-          value={newBlogTitle}        
+          value={newBlogTitle}
           onChange={({ target }) => setNewBlogTitle(target.value)}
-          />
+        />
       </div>
       <div>
           author:
-          <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
-            value={newBlogAuthor}          
-            onChange={({ target }) => setNewBlogAuthor(target.value)}
-          />
+        <input
+          className="input input-bordered w-full max-w-xs"
+          type="text"
+          value={newBlogAuthor}
+          onChange={({ target }) => setNewBlogAuthor(target.value)}
+        />
       </div>
       <div>
         url:
-          <input
+        <input
           className="input input-bordered w-full max-w-xs"
           type="text"
-          value={newBlogUrl}        
+          value={newBlogUrl}
           onChange={({ target }) => setNewBlogUrl(target.value)}
-          />
+        />
       </div>
       <button className="btn btn-ghost" type="submit">create</button>
     </form>
