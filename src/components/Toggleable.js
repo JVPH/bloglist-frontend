@@ -25,8 +25,10 @@ const Toggleable = forwardRef((props, refs) => {
         {props.children}
         <button className='btn btn-ghost' onClick={toggleVisibility}>cancel</button>
       </div>
-    </div>  
+    </div>
   )
 })
+
+Toggleable.displayName = 'Toggleable'
 
 export default Toggleable
