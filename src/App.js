@@ -80,9 +80,10 @@ const App = () => {
 
   const blogFormRef = useRef()
 
-  const handleLikesUpdate = (updatedBlog) => {
+  const handleLikesUpdate = async (blogObj, updatedBlog) => {
+    await blogService.updateBlog(blogObj.id, updatedBlog)
     setBlogs(blogs.map(blog =>
-      blog.id === updatedBlog.id ? updatedBlog : blog
+      blog.id === blogObj.id ? blogObj : blog
     ))
   }
 

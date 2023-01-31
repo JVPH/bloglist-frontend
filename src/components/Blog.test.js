@@ -1,4 +1,3 @@
-import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -40,6 +39,18 @@ describe('<Blog />', () => {
     await user.click(button)
     const detailedView = container.querySelector('.detailedView')
     expect(detailedView).toBeVisible()
+  })
+
+  test('if the like button is clicked twice, the event handler the component received as props is called twice', async() => {
+    const user = userEvent.setup()
+    const handleLikesUpdate = jest.fn()
+
+    const { container } = render(<Blog blog={blog} handleLikesUpdate={handleLikesUpdate} />)
+
+    const likeBtn = container.querySelector('#like-btn')
+    await user.click(likeBtn)
+    await user.click(likeBtn)
+    expect(handleLikesUpdate.mock.calls).toHaveLength(2)
   })
 })
 

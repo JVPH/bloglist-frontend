@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import  blogService from '../services/blogs'
 
 const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
   const [visible, setVisible] = useState(false)
@@ -17,18 +16,13 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
       ...blog,
       likes: blog.likes+1
     }
-
     const updatedBlog = {
       ...blog,
       user: blog.user.id,
       likes: blog.likes+1
     }
-
-
-
-    await blogService.updateBlog(blog.id, updatedBlog)
     setLikes(blog.likes+1)
-    handleLikesUpdate(blogObj)
+    handleLikesUpdate(blogObj, updatedBlog)
   }
 
   const handleDeleteBtn = () => {
@@ -55,7 +49,7 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
         <div className="stat">
           <div className="stat-title">Likes:</div>
           <p className="prose-xl">{likes}</p>
-          <button className="btn btn-sm btn-outline" onClick={handleLikeBtn}>like</button>
+          <button className="btn btn-sm btn-outline " id='like-btn' onClick={handleLikeBtn}>like</button>
         </div>
         <div className="stat">
           <div className="stat-title">Name:</div>
@@ -63,7 +57,7 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
         </div>
         {blog.user.username === username ?
           <div className="stat">
-            <button className="btn btn-sm btn-outline like-btn" onClick={handleDeleteBtn}>remove</button>
+            <button className="btn btn-sm btn-outline" onClick={handleDeleteBtn}>remove</button>
           </div>
           : null}
       </div>
