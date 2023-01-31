@@ -39,10 +39,10 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
 
   return (
     <div>
-      <div style={hideWhenVisible}>
-        <p className="prose-xl">{blog.title} {blog.author} <button className='btn btn-ghost' onClick={toggleVisibility}>view</button></p>
+      <div className='defaultView' style={hideWhenVisible}>
+        <p className="prose-xl">{blog.title} {blog.author}<button className='btn btn-ghost' onClick={toggleVisibility}>view</button></p>
       </div>
-      <div className="stats stats-vertical shadow" style={showWhenVisible}>
+      <div className="stats stats-vertical shadow detailedView" style={showWhenVisible}>
         <button className='btn btn-ghost' onClick={toggleVisibility}>hide</button>
         <div className="stat">
           <div className="stat-title">Blog:</div>
@@ -63,7 +63,7 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
         </div>
         {blog.user.username === username ?
           <div className="stat">
-            <button className="btn btn-sm btn-outline" onClick={handleDeleteBtn}>remove</button>
+            <button className="btn btn-sm btn-outline like-btn" onClick={handleDeleteBtn}>remove</button>
           </div>
           : null}
       </div>
