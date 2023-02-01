@@ -20,6 +20,7 @@ const LoginForm = ({ handleLogin }) => {
           className="input input-bordered w-full max-w-xs"
           value={username}
           name="Username"
+          data-cy="username"
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
@@ -30,10 +31,11 @@ const LoginForm = ({ handleLogin }) => {
           className="input input-bordered w-full max-w-xs"
           value={password}
           name="Password"
+          data-cy="password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit" className="btn rounded-none px-16">login</button>
+      <button type="submit" className="btn rounded-none px-16" data-cy="login-btn">login</button>
     </form>
   )
 }
