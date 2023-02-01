@@ -25,6 +25,7 @@ const BlogForm = ({ createBlog }) => {
           className="input input-bordered w-full max-w-xs"
           type="text"
           value={newBlogTitle}
+          data-cy="title-input"
           onChange={({ target }) => setNewBlogTitle(target.value)}
           placeholder='title'
         />
@@ -35,6 +36,7 @@ const BlogForm = ({ createBlog }) => {
           className="input input-bordered w-full max-w-xs"
           type="text"
           value={newBlogAuthor}
+          data-cy="author-input"
           onChange={({ target }) => setNewBlogAuthor(target.value)}
           placeholder='author'
         />
@@ -45,11 +47,12 @@ const BlogForm = ({ createBlog }) => {
           className="input input-bordered w-full max-w-xs"
           type="text"
           value={newBlogUrl}
+          data-cy="url-input"
           onChange={({ target }) => setNewBlogUrl(target.value)}
           placeholder='url'
         />
       </div>
-      <button className="btn btn-ghost" type="submit">create</button>
+      <button className="btn btn-ghost" type="submit" data-cy="submit-blog-btn">create</button>
     </form>
   )
 }

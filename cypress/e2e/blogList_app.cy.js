@@ -33,4 +33,19 @@ describe('BlogList app', function () {
       cy.get('html').should('not.contain', 'John Doe logged in')
     })
   })
+
+  describe('when logged in', function () {
+    beforeEach(function () {
+      cy.login({ username: 'JohnDoe2000', password: 'password' })
+    })
+
+    it.only('a new blog can be created', function () {
+      cy.contains('new blog').click()
+      cy.get('[data-cy="title-input"]').type('Cypress\'s Blog')
+      cy.get('[data-cy="author-input"]').type('Cyp Ress')
+      cy.get('[data-cy="url-input"]').type('docs.cypress.io')
+      cy.contains('create').click()
+      cy.contains('Cypress\'s Blog Cyp Ress')
+    })
+  })
 })
