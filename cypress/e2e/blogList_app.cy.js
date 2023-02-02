@@ -64,13 +64,28 @@ describe('BlogList app', function () {
           .should('contain', '1')
       })
 
-      it.only('a blog can be deleted by its creator', function () {
+      it('a blog can be deleted by its creator', function () {
         cy.contains('first blog')
           .contains('view').click()
         cy.get('html')
           .contains('remove').click()
 
         cy.get('html').should('not.contain', 'first blog')
+      })
+
+      it.only('delete button is absent for non-creators.', function() {
+        const user = {
+          name: 'Jane Doe',
+          username: 'JaneDoe2000',
+          password: 'password'
+        }
+        cy.get('html').contains('logout').click()
+        cy.request('POST', `${Cypress.env('BACKEND')}/users/`, user)
+        cy.login({ username: 'JaneDoe2000', password: 'password' })
+        cy.contains('first blog')
+          .contains('view').click()
+
+        cy.get('[data-cy="detailed-view-blog"]').should('not.contain', 'remove')
       })
     })
   })
