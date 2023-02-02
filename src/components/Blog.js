@@ -48,7 +48,7 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
         </div>
         <div className="stat">
           <div className="stat-title">Likes:</div>
-          <p className="prose-xl">{likes}</p>
+          <p className="prose-xl" data-cy='likes-counter'>{likes}</p>
           <button className="btn btn-sm btn-outline " id='like-btn' onClick={handleLikeBtn}>like</button>
         </div>
         <div className="stat">

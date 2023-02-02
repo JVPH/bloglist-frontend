@@ -33,11 +33,11 @@ Cypress.Commands.add('login', ({ username, password }) => {
   })
 })
 
-Cypress.Commands.add('createNote', ({ content, important }) => {
+Cypress.Commands.add('createBlog', ({ title, author, url }) => {
   cy.request({
-    url: `${Cypress.env('BACKEND')}/notes`,
+    url: `${Cypress.env('BACKEND')}/blogs`,
     method: 'POST',
-    body: { content, important },
+    body: { title, author, url },
     headers: {
       'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedBlogListUser')).token}`
     }

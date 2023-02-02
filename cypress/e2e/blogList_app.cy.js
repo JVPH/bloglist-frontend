@@ -39,13 +39,39 @@ describe('BlogList app', function () {
       cy.login({ username: 'JohnDoe2000', password: 'password' })
     })
 
-    it.only('a new blog can be created', function () {
+    it('a new blog can be created', function () {
       cy.contains('new blog').click()
       cy.get('[data-cy="title-input"]').type('Cypress\'s Blog')
       cy.get('[data-cy="author-input"]').type('Cyp Ress')
       cy.get('[data-cy="url-input"]').type('docs.cypress.io')
       cy.contains('create').click()
       cy.contains('Cypress\'s Blog Cyp Ress')
+    })
+
+    describe('and several blogs exist', function () {
+      beforeEach(function () {
+        cy.createBlog({ title: 'first blog', author: 'a', url: 'a.com' })
+        cy.createBlog({ title: 'second blog', author: 'b', url: 'b.com' })
+        cy.createBlog({ title: 'third blog', author: 'c', url: 'c.com' })
+      })
+
+      it('a blog can be liked', function () {
+        cy.contains('first blog')
+          .contains('view').click()
+        cy.get('html')
+          .contains('like').click()
+        cy.get('[data-cy="likes-counter"]')
+          .should('contain', '1')
+      })
+
+      it.only('a blog can be deleted by its creator', function () {
+        cy.contains('first blog')
+          .contains('view').click()
+        cy.get('html')
+          .contains('remove').click()
+
+        cy.get('html').should('not.contain', 'first blog')
+      })
     })
   })
 })
