@@ -50,30 +50,30 @@ describe('BlogList app', function () {
 
     describe('and several blogs exist', function () {
       beforeEach(function () {
-        cy.createBlog({ title: 'first blog', author: 'a', url: 'a.com' })
-        cy.createBlog({ title: 'second blog', author: 'b', url: 'b.com' })
+        cy.createBlog({ title: 'first blog', author: 'a', url: 'a.com', likes: 2 })
+        cy.createBlog({ title: 'second blog', author: 'b', url: 'b.com', likes: 3 })
         cy.createBlog({ title: 'third blog', author: 'c', url: 'c.com' })
       })
 
       it('a blog can be liked', function () {
-        cy.contains('first blog')
+        cy.contains('second blog')
           .contains('view').click()
         cy.get('html')
           .contains('like').click()
         cy.get('[data-cy="likes-counter"]')
-          .should('contain', '1')
+          .should('contain', '4')
       })
 
       it('a blog can be deleted by its creator', function () {
-        cy.contains('first blog')
+        cy.contains('second blog')
           .contains('view').click()
         cy.get('html')
           .contains('remove').click()
 
-        cy.get('html').should('not.contain', 'first blog')
+        cy.get('html').should('not.contain', 'second blog')
       })
 
-      it.only('delete button is absent for non-creators.', function() {
+      it('delete button is absent for non-creators.', function () {
         const user = {
           name: 'Jane Doe',
           username: 'JaneDoe2000',
@@ -87,6 +87,16 @@ describe('BlogList app', function () {
 
         cy.get('[data-cy="detailed-view-blog"]').should('not.contain', 'remove')
       })
+
+      it('should be ordered by likes', () => {
+
+        cy.get('[data-cy="likes-counter"]')
+          .then(elements => {
+            return [...elements].map((element) => element.textContent)
+          })
+          .should('deep.eq', ['3', '2', '0'])
+      })
+
     })
   })
 })

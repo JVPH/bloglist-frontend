@@ -32,7 +32,7 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
   }
 
   return (
-    <div>
+    <div className='blog'>
       <div className='defaultView' style={hideWhenVisible}>
         <p className="prose-xl">{blog.title} {blog.author}<button className='btn btn-ghost' onClick={toggleVisibility}>view</button></p>
       </div>
