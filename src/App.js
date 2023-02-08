@@ -94,23 +94,25 @@ const App = () => {
 
   return (
     <div className='flex flex-col space-y-4 min-h-screen'>
-      <h1 className='text-5xl font-bold my-6'>Blogs</h1>
-      <Notification notification={notification} />
-      <main className='flex-1'>
+      <div className='px-8 flex-1'>
+        <h1 className='text-5xl font-bold my-6'>Blogs</h1>
+        <Notification notification={notification} />
         {user === null ?
           <LoginForm handleLogin={handleLogin} /> :
           <div>
-            <p className='prose-lg'>{user.name} logged in <button className='btn' onClick={handleLogout}>logout</button> </p>
+            <p className='prose-xl'><span className='italic'>{user.name}</span> logged in <button className='btn btn-ghost' onClick={handleLogout}>logout</button> </p>
             <Toggleable buttonLabel='new blog' ref={blogFormRef}>
               <BlogForm createBlog={addBlog} />
             </Toggleable>
           </div>
         }
-        {Boolean(blogs) === true ? blogs.sort((a,b) => b.likes - a.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} handleLikesUpdate={handleLikesUpdate} username={user === null ? null : user.username} handleBlogRemoval={handleBlogRemoval}/>
-        )
-          : null}
-      </main>
+        <main className='flex gap-4 pt-6 flex-wrap'>
+          {Boolean(blogs) === true ? blogs.sort((a,b) => b.likes - a.likes).map(blog =>
+            <Blog key={blog.id} blog={blog} handleLikesUpdate={handleLikesUpdate} username={user === null ? null : user.username} handleBlogRemoval={handleBlogRemoval}/>
+          )
+            : null}
+        </main>
+      </div>
       <Footer />
     </div>
   )

@@ -32,19 +32,19 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
   }
 
   return (
-    <div className='blog'>
-      <div className='defaultView' style={hideWhenVisible}>
-        <p className="prose-xl">{blog.title} {blog.author}<button className='btn btn-ghost' onClick={toggleVisibility}>view</button></p>
+    <div className='blog flex'>
+      <div className='defaultView w-80' style={hideWhenVisible}>
+        <p className="prose-xl">{blog.title} - <span className='italic'>{blog.author}</span><button className='btn btn-ghost' onClick={toggleVisibility}>view</button></p>
       </div>
-      <div className="stats stats-vertical shadow detailedView" data-cy='detailed-view-blog' style={showWhenVisible}>
-        <button className='btn btn-ghost' onClick={toggleVisibility}>hide</button>
+      <div className="stats stats-vertical shadow w-80 detailedView" data-cy='detailed-view-blog' style={showWhenVisible}>
+        <button className='btn btn-secondary' onClick={toggleVisibility}>hide</button>
         <div className="stat">
           <div className="stat-title">Blog:</div>
           <p className="prose-xl">{blog.title} {blog.author} </p>
         </div>
         <div className="stat">
           <div className="stat-title">URL:</div>
-          <p className="prose-xl">{blog.url}</p>
+          <p className="prose-xl truncate">{blog.url}</p>
         </div>
         <div className="stat">
           <div className="stat-title">Likes:</div>
@@ -52,7 +52,7 @@ const Blog = ({ blog, handleLikesUpdate, username, handleBlogRemoval }) => {
           <button className="btn btn-sm btn-outline " id='like-btn' onClick={handleLikeBtn}>like</button>
         </div>
         <div className="stat">
-          <div className="stat-title">Name:</div>
+          <div className="stat-title">Upload by:</div>
           <p className="prose-xl">{blog.user.name}</p>
         </div>
         {blog.user.username === username ?

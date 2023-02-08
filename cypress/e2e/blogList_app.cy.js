@@ -12,7 +12,7 @@ describe('BlogList app', function () {
 
   it('front page can be opened', function () {
     cy.contains('Blogs')
-    cy.contains('Copyright © 2023 - All right reserved by ACME Industries Ltd')
+    cy.contains('Copyright © 2023 - Made by JVPH')
   })
 
   describe('Login', function () {

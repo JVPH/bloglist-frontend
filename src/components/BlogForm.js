@@ -18,9 +18,8 @@ const BlogForm = ({ createBlog }) => {
   }
 
   return (
-    <form onSubmit={addBlog}>
+    <form onSubmit={addBlog} className='flex gap-4 flex-col w-80'>
       <div>
-        title:
         <input
           className="input input-bordered w-full max-w-xs"
           type="text"
@@ -31,7 +30,6 @@ const BlogForm = ({ createBlog }) => {
         />
       </div>
       <div>
-          author:
         <input
           className="input input-bordered w-full max-w-xs"
           type="text"
@@ -42,7 +40,6 @@ const BlogForm = ({ createBlog }) => {
         />
       </div>
       <div>
-        url:
         <input
           className="input input-bordered w-full max-w-xs"
           type="text"
@@ -52,7 +49,7 @@ const BlogForm = ({ createBlog }) => {
           placeholder='url'
         />
       </div>
-      <button className="btn btn-ghost" type="submit" data-cy="submit-blog-btn">create</button>
+      <button className="btn btn-primary" type="submit" data-cy="submit-blog-btn">create</button>
     </form>
   )
 }

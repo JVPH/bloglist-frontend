@@ -12,24 +12,24 @@ const LoginForm = ({ handleLogin }) => {
     setPassword('')
   }
   return (
-    <form onSubmit={login} className="my-8">
+    <form onSubmit={login} className="my-8 flex gap-4">
       <div>
-        <span className="prose-lg">username </span>
         <input
           type="text"
           className="input input-bordered w-full max-w-xs"
           value={username}
+          placeholder='username'
           name="Username"
           data-cy="username"
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
-        <span className="prose-lg">password </span>
         <input
           type="password"
           className="input input-bordered w-full max-w-xs"
           value={password}
+          placeholder='password'
           name="Password"
           data-cy="password"
           onChange={({ target }) => setPassword(target.value)}
